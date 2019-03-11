@@ -13,9 +13,9 @@ from faker import Faker
 3. 함수작성
 ```python
 myfake = Faker()
-# Farker의 메소드를 통해서 어떤 종류의 가짜데이터를 뽑아낼지 결정할 수 있음
+# Farker의 메소드를 통해서 어떤 종류의 가짜데이터를 뽑아낼지 결정할 수 있음
 # myfake.함수 이름 
-print(myfake.name())
+print(myfake.name())
 print(myfake.address())
 print(myfake.text())
 print(myfake.state())
@@ -29,7 +29,7 @@ $ python fake.py
 - 한국어 데이터 생성
 ```python
 myfake = Faker('ko_KR')
-print(myfake.name())
+print(myfake.name())
 print(myfake.address())
 #print(myfake.text()) 사용불가
 #print(myfake.state()) 사용불가
@@ -40,7 +40,7 @@ print(myfake.random_number())
 ```python
 # Seed 파일 (코드를 실행 할때 같은 fake 데이터 표출)
 myfake.seed(1) # seed number
-print(myfake.name())
+print(myfake.name())
 print(myfake.address())
 print(myfake.text())
 print(myfake.state())
