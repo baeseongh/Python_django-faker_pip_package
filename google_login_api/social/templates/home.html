@@ -1,0 +1,14 @@
+{%load socialaccount%} <!--socialaccount로드-->
+{%providers_media_js%}
+
+<h1>Social login!</h1>
+<!--로그인 판단-->
+{% if user.is_authenticated%}
+{{user.username}} 님이 로그인 중<br>
+<!--pip패키지가 만들어준 로그아웃 url-->
+<a href="/accounts/logout">로그아웃</a> 
+{%else%}
+<!--provider 'google' 사용-->
+<a href="{%provider_login_url 'google'%}">구글 로그인</a><br>
+<a href="/accounts/signup">회원가입</a><br>
+{%endif%}

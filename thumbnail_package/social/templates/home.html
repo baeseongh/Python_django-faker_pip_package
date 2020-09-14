@@ -1,0 +1,77 @@
+{%load socialaccount%} <!--socialaccount로드-->
+{%providers_media_js%}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9hmi3tlwrh"></script>
+</head>
+<body>
+<h1>Social login & Naver Maps & Thumbnail</h1>
+<!--로그인 판단-->
+{% if user.is_authenticated%}
+{{user.username}} 님이 로그인 중<br>
+<a href="/accounts/logout">로그아웃</a> 
+<h2>삼육대학교</h2>
+<div id="map" style="width:50%;height:400px;"></div><br>
+<!--pip패키지가 만들어준 로그아웃 url-->
+{%for blog in blog.all%}
+<img src="{{blog.image.url}}" width = 500>
+<br>
+<p>{{blog.text}}</p>
+<br>
+<img src="{{blog.image_thumbnail.url}}" alt="thumbnail image">
+<br>
+{%endfor%}
+{%else%}
+<!--provider 'google' 사용-->
+<a href="{%provider_login_url 'google'%}">구글 로그인</a><br>
+<a href="/accounts/signup">회원가입</a><br>
+{%endif%}
+
+
+
+<script>
+var HOME_PATH = window.HOME_PATH || '.';
+
+var syu = new naver.maps.LatLng(37.6430449, 127.1052021),
+    map = new naver.maps.Map('map', {
+        center: syu.destinationPoint(0, 500),
+        zoom: 10
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: syu
+    });
+
+var contentString = [
+        '<div class="iw_inner">',
+        '   <h3>삼육대학교</h3>',
+        '   <p>서울특별시 노원구 공릉2동 화랑로 815<br />',
+        '       <a href="https://new.syu.ac.kr/" target="_blank">https://new.syu.ac.kr/</a>',
+        '   </p>',
+        '</div>'
+    ].join('');
+
+var infowindow = new naver.maps.InfoWindow({
+    content: contentString
+});
+
+naver.maps.Event.addListener(marker, "click", function(e) {
+    if (infowindow.getMap()) {
+        infowindow.close();
+    } else {
+        infowindow.open(map, marker);
+    }
+});
+
+infowindow.open(map, marker);
+</script>
+</body>
+</html>
+
+
